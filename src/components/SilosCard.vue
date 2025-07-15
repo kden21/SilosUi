@@ -31,7 +31,7 @@ if(silos && silos.nature != null && silos.totalFootage != null){
 const fullnessResult = silos.fullness != null ? silos.fullness / maxFullness.value : 0;
 
 const progress1 = ref(fullnessResult);
-const progressLabel1 = computed(() => (silos.fullness) + ' т');
+const progressLabel1 = computed(() => (silos.fullness == null ? '-' : silos.fullness) + ' т');
 
 const confirmDeleteDialog = ref(false)
 let silosStartDate = null;
