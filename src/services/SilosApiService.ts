@@ -7,7 +7,7 @@ import type { UserDto } from 'src/models/UserDto';
 import type { SilosFilterDto } from 'src/models/SilosFilterDto';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5160/api/v1',
+  baseURL: 'http://192.168.0.105 :5160/api/v1',
   timeout: 60000, // тайм-аут (в миллисекундах)
   headers: {
     'Content-Type': 'application/json',
