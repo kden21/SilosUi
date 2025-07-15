@@ -23,8 +23,16 @@ function editSilos() {
 const userRole = localStorage.getItem('role');
 const model = defineProps<SilosCardDto>();
 const silos = model.silos;
-const progress1 = ref(silos.fullness == null ? 0 : silos.fullness / 100);
-const progressLabel1 = computed(() => (progress1.value * 100).toFixed(2) + '%');
+
+const maxFullness = ref(0);
+if(silos && silos.nature != null && silos.totalFootage != null){
+  maxFullness.value = silos.nature / 1000 * 9000 * (silos.totalFootage);
+}
+const fullnessResult = silos.fullness != null ? silos.fullness / maxFullness.value : 0;
+
+const progress1 = ref(fullnessResult);
+const progressLabel1 = computed(() => (silos.fullness) + ' т');
+
 const confirmDeleteDialog = ref(false)
 let silosStartDate = null;
 let silosHarvestYear = null;
@@ -110,7 +118,7 @@ function confirmDelete(){
             >
           </div>
           <div class="text-subtitle2" style="text-align: end; width: 100%">
-            <span class="text-weight-bold">{{ silos.nature == null ? '-' : silos.nature }} %</span>
+            <span class="text-weight-bold">{{ silos.nature == null ? '-' : silos.nature }} г/л</span>
           </div>
           <div class="text-subtitle2" style="text-align: end; width: 100%">
             <span class="text-weight-bold"

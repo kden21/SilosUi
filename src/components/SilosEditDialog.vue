@@ -54,6 +54,25 @@ if (silosDto.value) {
   }
 }
 
+const onInputFullness = () => {
+  if(silosDtoDraft.value == null){
+    return;
+  }
+  if(silosDtoDraft.value.freeFootage != null && silosDtoDraft.value.totalFootage != null
+    && silosDtoDraft.value.nature != null&& silosDtoDraft.value.nature > 0 && silosDtoDraft.value.freeFootage.toString() !== ''
+    && silosDtoDraft.value.totalFootage.toString() !== '' && silosDtoDraft.value.nature.toString() !== '')
+  {
+    if(silosDtoDraft.value.totalFootage == silosDtoDraft.value.freeFootage){
+      silosDtoDraft.value.fullness = 0;
+    }
+    else{
+      silosDtoDraft.value.fullness = silosDtoDraft.value.nature / 1000 * 9000 * (silosDtoDraft.value.totalFootage - silosDtoDraft.value.freeFootage);
+    }}
+  else {
+    silosDtoDraft.value.fullness = null;
+  }
+};
+
 const harvestYear = ref(harvestYearValue);
 const startDate = ref(startDateValue);
 const cultures = ['Пшеница', 'Ячмень', 'Семечка'];
@@ -152,7 +171,7 @@ function validateSilos(): boolean {
           <q-input
             filled
             v-model="silosDtoDraft.gorchak"
-            mask="#.##"
+            type="number"
             reverse-fill-mask
             label="Горчак, %"
             dense
@@ -160,7 +179,7 @@ function validateSilos(): boolean {
           <q-input
             filled
             v-model="silosDtoDraft.protein"
-            mask="#.##"
+            type="number"
             reverse-fill-mask
             label="Белок, %"
             dense
@@ -168,7 +187,7 @@ function validateSilos(): boolean {
           <q-input
             filled
             v-model="silosDtoDraft.bug"
-            mask="#.##"
+            type="number"
             reverse-fill-mask
             label="Клоп, %"
             dense
@@ -179,7 +198,7 @@ function validateSilos(): boolean {
           <q-input
             filled
             v-model="silosDtoDraft.sornaya"
-            mask="#.##"
+            type="number"
             reverse-fill-mask
             label="Сорная примесь, %"
             dense
@@ -187,15 +206,16 @@ function validateSilos(): boolean {
           <q-input
             filled
             v-model="silosDtoDraft.nature"
-            mask="#.##"
+            @update:model-value="onInputFullness"
+            type="number"
             reverse-fill-mask
-            label="Натура, %"
+            label="Натура, г/л"
             dense
           />
           <q-input
             filled
             v-model="silosDtoDraft.humidity"
-            mask="#.##"
+            type="number"
             reverse-fill-mask
             label="Влажность, %"
             dense
@@ -206,7 +226,7 @@ function validateSilos(): boolean {
           <q-input
             filled
             v-model="silosDtoDraft.zernovaya"
-            mask="#.##"
+            type="number"
             reverse-fill-mask
             label="Зерновая примесь, %"
             dense
@@ -214,7 +234,7 @@ function validateSilos(): boolean {
           <q-input
             filled
             v-model="silosDtoDraft.idk"
-            mask="#.##"
+            type="number"
             reverse-fill-mask
             label="ИДК, ед"
             dense
@@ -242,12 +262,12 @@ function validateSilos(): boolean {
         </div>
 
         <div style="margin-bottom: 22px" class="flex justify-between">
-          <q-input filled v-model="harvestYear" label="Год урожая" dense mask="####" />
           <q-input
             filled
             v-model="silosDtoDraft.totalFootage"
             label="Метраж общий, м"
-            mask="#.##"
+            @update:model-value="onInputFullness"
+            type="number"
             reverse-fill-mask
             dense
           />
@@ -255,9 +275,19 @@ function validateSilos(): boolean {
             filled
             v-model="silosDtoDraft.freeFootage"
             label="Метраж свободный, м"
-            mask="#.##"
+            @update:model-value="onInputFullness"
+            type="number"
             reverse-fill-mask
             dense
+          />
+          <q-input
+            filled
+            v-model="silosDtoDraft.fullness"
+            label="Загруженность, т"
+            type="number"
+            reverse-fill-mask
+            dense
+            disable
           />
         </div>
 
@@ -266,7 +296,7 @@ function validateSilos(): boolean {
             filled
             v-model="silosDtoDraft.gluten"
             label="Клейковина, %"
-            mask="#.##"
+            type="number"
             reverse-fill-mask
             dense
           />
@@ -277,14 +307,7 @@ function validateSilos(): boolean {
             mask="#"
             dense
           />
-          <q-input
-            filled
-            v-model="silosDtoDraft.fullness"
-            label="Загруженность, %"
-            mask="#.##"
-            reverse-fill-mask
-            dense
-          />
+          <q-input filled v-model="harvestYear" label="Год урожая" dense mask="####" />
         </div>
 
         <q-input

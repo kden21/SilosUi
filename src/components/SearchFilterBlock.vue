@@ -224,14 +224,14 @@ const onInput = () => {
                       <q-input
                         filled
                         v-model="silosFilterDto.natureFrom"
-                        label="Натура от, %"
+                        label="Натура от, г/л"
                         type="number"
                         dense
                       />
                       <q-input
                         filled
                         v-model="silosFilterDto.natureTo"
-                        label="Натура до, %"
+                        label="Натура до, г/л"
                         dense
                       />
                     </div>
