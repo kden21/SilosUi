@@ -1,0 +1,34 @@
+export interface SilosFilterDto {
+  name: string | null;
+  culture: string | null;
+  gorchakFrom: number | null;
+  gorchakTo: number | null;
+  proteinFrom: number | null;
+  proteinTo: number | null;
+  bugFrom: number | null;
+  bugTo: number | null;
+  sornayaFrom: number | null;
+  sornayaTo: number | null;
+  zernovayaFrom: number | null;
+  zernovayaTo: number | null;
+  idkFrom: number | null;
+  idkTo: number | null;
+  natureFrom: number | null;
+  natureTo: number | null;
+  humidityFrom: number | null;
+  humidityTo: number | null;
+  startDateFrom: Date | null;
+  startDateTo: Date | null;
+  harvestYearFrom: Date | null;
+  harvestYearTo: Date | null;
+  classFrom: number | null;
+  classTo: number | null;
+  glutenFrom: number | null;
+  glutenTo: number | null;
+  fullnessFrom: number | null;
+  fullnessTo: number | null;
+  totalFootageFrom: number | null;
+  totalFootageTo: number | null;
+  freeFootageFrom: number | null;
+  freeFootageTo: number | null;
+}
